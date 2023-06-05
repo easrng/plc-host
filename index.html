@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: dark light;">
+  <head>
+    <title>plc-host</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@did-plc/lib": "https://unpkg.com/@did-plc/lib@0.0.4/src/index.ts",
+          "@atproto/common": "https://unpkg.com/@atproto/common@0.2.0/src/index.ts",
+          "axios": "https://esm.sh/axios@1.4.0",
+          "@atproto/common-web": "https://unpkg.com/@atproto/common-web@0.1.0/src/index.ts",
+          "multiformats": "https://esm.sh/multiformats@11.0.2",
+          "multiformats/cid": "https://esm.sh/multiformats@11.0.2/cid",
+          "multiformats/block": "https://esm.sh/multiformats@11.0.2/block",
+          "multiformats/codecs/raw": "https://esm.sh/multiformats@11.0.2/codecs/raw",
+          "multiformats/hashes/sha2": "https://esm.sh/multiformats@11.0.2/hashes/sha2",
+          "uint8arrays": "https://esm.sh/uint8arrays@4.0.3",
+          "zod": "https://esm.sh/zod@3.21.4",
+          "fs/promises": "data:text/javascript,export default {}",
+          "@ipld/dag-cbor": "https://esm.sh/@ipld/dag-cbor@9.0.1",
+          "cbor-x": "https://esm.sh/cbor-x@1.5.3",
+          "pino": "https://esm.sh/pino@8.14.1",
+          "stream": "https://esm.sh/stream-browserify@3.0.0",
+          "@atproto/crypto": "https://unpkg.com/@atproto/crypto@0.1.1/src/index.ts",
+          "one-webcrypto": "https://esm.sh/one-webcrypto@1.0.3",
+          "big-integer": "https://esm.sh/big-integer@1.6.51",
+          "@noble/secp256k1": "https://esm.sh/@noble/secp256k1@2.0.0",
+          "crypto": "data:text/javascript,export default {}",
+          "p-retry": "https://esm.sh/p-retry@5.1.2",
+          "p-limit": "https://esm.sh/p-limit@4.0.0"
+        }
+      }
+    </script>
+    <script
+      async
+      src="https://esm.sh/es-module-shims@1.7.3"
+      type="module"
+    ></script>
+    <script type="module">
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then(async (registration) => {
+          if (!registration.active)
+            await new Promise((cb) => {
+              const sw = registration.installing || registration.waiting;
+              const handler = () => {
+                if (sw.state === "activated") {
+                  sw.removeEventListener("statechange", handler);
+                  cb();
+                }
+              };
+              sw.addEventListener("statechange", handler);
+            });
+        })
+        .catch((err) => {
+          document.body.textContent =
+            "Failed to register ServiceWorker. Try not using Private Browsing if you are.";
+          console.log("ServiceWorker registration failed: ", err);
+        })
+        .then(async () => {
+          self.process = (
+            await import("https://esm.sh/stable/node_process.js")
+          ).default;
+          await import("./ui.bundle.js");
+        })
+        .catch((err) => {
+          console.error(err);
+          document.body.textContent = "There was an error loading the page :(";
+        });
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <img src="https://api.no-bitch.es/no%20javascript%3f" alt="no javascript?" />
+    </noscript>
+  </body>
+</html>
