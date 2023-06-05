@@ -33,12 +33,8 @@
         }
       }
     </script>
-    <script
-      async
-      src="https://esm.sh/es-module-shims@1.7.3"
-      type="module"
-    ></script>
     <script type="module">
+      import "https://esm.sh/es-module-shims@1.7.3";
       navigator.serviceWorker
         .register("./sw.js")
         .then(async (registration) => {
@@ -63,7 +59,7 @@
           self.process = (
             await import("https://esm.sh/stable/node_process.js")
           ).default;
-          await import("./ui.bundle.js");
+          await importShim("./ui.bundle.js");
         })
         .catch((err) => {
           console.error(err);
