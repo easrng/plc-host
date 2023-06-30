@@ -20,7 +20,7 @@
           "zod": "https://esm.sh/zod@3.21.4",
           "fs/promises": "data:text/javascript,export default {}",
           "@ipld/dag-cbor": "https://esm.sh/@ipld/dag-cbor@9.0.1",
-          "cbor-x": "https://esm.sh/cbor-x@1.5.3?alias=module:create-require-stub&pin=stable",
+          "cbor-x": "https://esm.sh/cbor-x@1.5.3?alias=module:create-require-stub",
           "pino": "https://esm.sh/pino@8.14.1",
           "stream": "https://esm.sh/stream-browserify@3.0.0",
           "@atproto/crypto": "https://unpkg.com/@atproto/crypto@0.1.1/src/index.ts",
@@ -57,7 +57,7 @@
         })
         .then(async () => {
           self.process = (
-            await import("https://esm.sh/stable/node_process.js")
+            await import("https://esm.sh/just-process")
           ).default;
           process.env.CBOR_NATIVE_ACCELERATION_DISABLED = "true";
           await importShim("./ui.bundle.js");
