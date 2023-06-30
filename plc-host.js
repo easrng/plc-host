@@ -1,7 +1,7 @@
 import { EcdsaKeypair } from "@atproto/crypto";
 import { Client } from "@did-plc/lib";
 import * as uint8arrays from "uint8arrays";
-import * as CBOR from "cbor-x";
+import * as CBOR from "https://esm.sh/cborg@^1.10.0";
 
 const didString = {
   decode(text) {
